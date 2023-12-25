@@ -23,8 +23,8 @@ class InvoiceGeneratorTest {
     @Test
     void givenMultipleRides_shouldReturnAggregateTotalForAll(){
         Ride[] rides = {
-          new Ride(4, 10),
-          new Ride(8, 15)
+                new Ride(4, 10),
+                new Ride(8, 15)
         };
         assertEquals(155, invoiceGenerator.aggregate_fare(rides));
     }
