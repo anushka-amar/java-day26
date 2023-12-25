@@ -2,9 +2,12 @@ public class Ride {
     private int distance;
     private int time;
 
-    public Ride(int distance, int time) {
+    private RideType type;
+
+    public Ride(int distance, int time, RideType type) {
         this.distance = distance;
         this.time = time;
+        this.type = type;
     }
 
     public int getDistance() {
@@ -13,5 +16,9 @@ public class Ride {
 
     public int getTime() {
         return time;
+    }
+
+    public RideType getType(){
+        return type;
     }
 }
