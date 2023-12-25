@@ -10,4 +10,13 @@ public class InvoiceGenerator {
         double cost =(double) MINIMUM_FARE + (COST_PER_KM*distance)+ (time*COST_PER_MIN);
         return cost;
     }
+
+    /* UC-2 aggregate fare of multiple rides */
+    public double aggregate_fare(Ride[] rides){
+        double totalFare = 0;
+        for(Ride ride: rides){
+            totalFare = totalFare + calculate_fare(ride.getDistance(), ride.getTime());
+        }
+        return totalFare;
+    }
 }

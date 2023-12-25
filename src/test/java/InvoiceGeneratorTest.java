@@ -16,6 +16,16 @@ class InvoiceGeneratorTest {
     /* UC-1 calculate fare */
     @Test
     void givenDistanceAndTime_shouldReturnTotalFare(){
-        assertEquals(227, invoiceGenerator.calculate_fare(5, 172));
+        assertEquals(227, invoiceGenerator.calculate_fare(5, 20));
+    }
+
+    /* UC-2 aggregate fare of multiple rides */
+    @Test
+    void givenMultipleRides_shouldReturnAggregateTotalForAll(){
+        Ride[] rides = {
+          new Ride(4, 10),
+          new Ride(8, 15)
+        };
+        assertEquals(155, invoiceGenerator.aggregate_fare(rides));
     }
 }
