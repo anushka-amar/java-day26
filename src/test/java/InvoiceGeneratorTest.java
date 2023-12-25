@@ -28,4 +28,14 @@ class InvoiceGeneratorTest {
         };
         assertEquals(155, invoiceGenerator.aggregate_fare(rides));
     }
+
+    /* UC-3 enhanced-invoice - average fare per ride */
+    @Test
+    void givenTotalFare_shouldReturnAvgFarePerRide(){
+        Ride[] rides = {
+                new Ride(4, 10),
+                new Ride(8, 15)
+        };
+        assertEquals(77.5, invoiceGenerator.average_fare(rides));
+    }
 }
