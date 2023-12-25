@@ -7,8 +7,6 @@ public class InvoiceSummary {
         this.ride_count = ride_count;
         this.total_fare = total_fare;
         this.avg_fare = this.total_fare/this.ride_count;
-
-        print_summary();
     }
 
     @Override

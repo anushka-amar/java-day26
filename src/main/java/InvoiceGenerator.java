@@ -1,14 +1,22 @@
 public class InvoiceGenerator {
 
-    private static final int MINIMUM_FARE = 5;
-    private static final int COST_PER_KM = 10;
-    private static final int COST_PER_MIN = 1;
+    private static final int MINIMUM_NORMAL_FARE = 5;
+    private static final int COST_PER_KM_NORMAL = 10;
+    private static final int COST_PER_MIN_NORMAL = 1;
+
+    private static final int MINIMUM_PREMIUM_FARE = 20;
+    private static final int COST_PER_KM_PREMIUM = 15;
+    private static final int COST_PER_MIN_PREMIUM = 2;
 
     RideRepository rideRepository = new RideRepository();
 
     /* UC-1 calculate fare */
-    public int calculate_fare(int distance, int time){
-        return MINIMUM_FARE + (COST_PER_KM*distance)+ (time*COST_PER_MIN);
+    public int calculate_fare(int distance, int time, RideType type) {
+        if (type == RideType.NORMAL) {
+            return Math.max(MINIMUM_NORMAL_FARE, COST_PER_KM_NORMAL * distance + COST_PER_MIN_NORMAL * time);
+        } else{
+            return Math.max(MINIMUM_PREMIUM_FARE, COST_PER_KM_PREMIUM * distance + COST_PER_MIN_PREMIUM * time);
+        }
     }
 
     /* UC-2 aggregate fare of multiple rides
@@ -16,7 +24,7 @@ public class InvoiceGenerator {
     public InvoiceSummary calculate_fare(Ride[] rides){
         int totalFare = 0;
         for(Ride ride: rides){
-            totalFare = totalFare + this.calculate_fare(ride.getDistance(), ride.getTime());
+            totalFare = totalFare + this.calculate_fare(ride.getDistance(), ride.getTime(), ride.getType());
         }
         return new InvoiceSummary(rides.length, totalFare);
     }

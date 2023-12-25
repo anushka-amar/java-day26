@@ -16,7 +16,7 @@ class InvoiceGeneratorTest {
     /* UC-1 calculate fare */
     @Test
     void givenDistanceAndTime_shouldReturnTotalFare(){
-        assertEquals(227, invoiceGenerator.calculate_fare(5, 20));
+        assertEquals(227, invoiceGenerator.calculate_fare(5, 20, RideType.NORMAL));
     }
 
 
@@ -25,11 +25,11 @@ class InvoiceGeneratorTest {
     @Test
     void givenRideCount_shouldReturnInvoiceSummary(){
         Ride[] rides = {
-                new Ride(4, 10),
-                new Ride(8, 15)
+                new Ride(4, 10, RideType.NORMAL),
+                new Ride(8, 15, RideType.PREMIUM)
         };
         InvoiceSummary summary = invoiceGenerator.calculate_fare(rides);
-        InvoiceSummary expectedInvoice = new InvoiceSummary(2, 155.0);
+        InvoiceSummary expectedInvoice = new InvoiceSummary(2, 227.0);
         assertEquals(expectedInvoice, summary);
     }
 
@@ -38,12 +38,25 @@ class InvoiceGeneratorTest {
     void givenUserId_returnsInvoiceSummary(){
         String user_id = "anushka";
         Ride[] rides = {
-                new Ride(4, 10),
-                new Ride(8, 15)
+                new Ride(4, 10, RideType.NORMAL),
+                new Ride(8, 15, RideType.PREMIUM)
         };
         invoiceGenerator.addRides(user_id, rides);
         InvoiceSummary summary = invoiceGenerator.getInvoiceSummary(user_id);
-        InvoiceSummary expectedInvoice = new InvoiceSummary(2, 155.0);
+        InvoiceSummary expectedInvoice = new InvoiceSummary(2, 227.0);
         assertEquals(expectedInvoice, summary);
+    }
+
+    /* UC-5 Premium rides */
+    @Test
+    void givenRideTypes_returnInvoiceSummary(){
+        Ride[] rides = {
+                new Ride(4, 10, RideType.NORMAL),
+                new Ride(8, 15, RideType.PREMIUM)
+        };
+
+        invoiceGenerator.addRides("001", rides);
+        InvoiceSummary summary = invoiceGenerator.getInvoiceSummary("001");
+        InvoiceSummary expectedInvoice = new InvoiceSummary(2, 227.0);
     }
 }
