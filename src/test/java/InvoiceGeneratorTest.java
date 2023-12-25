@@ -19,23 +19,31 @@ class InvoiceGeneratorTest {
         assertEquals(227, invoiceGenerator.calculate_fare(5, 20));
     }
 
-    /* UC-2 aggregate fare of multiple rides */
+
+    /* UC-2 aggregate fare of multiple rides
+     * Refactored UC-3 to return invoice*/
     @Test
-    void givenMultipleRides_shouldReturnAggregateTotalForAll(){
+    void givenRideCount_shouldReturnInvoiceSummary(){
         Ride[] rides = {
                 new Ride(4, 10),
                 new Ride(8, 15)
         };
-        assertEquals(155, invoiceGenerator.aggregate_fare(rides));
+        InvoiceSummary summary = invoiceGenerator.calculate_fare(rides);
+        InvoiceSummary expectedInvoice = new InvoiceSummary(2, 155.0);
+        assertEquals(expectedInvoice, summary);
     }
 
-    /* UC-3 enhanced-invoice - average fare per ride */
+    /* UC-4 invoice-service */
     @Test
-    void givenTotalFare_shouldReturnAvgFarePerRide(){
+    void givenUserId_returnsInvoiceSummary(){
+        String user_id = "anushka";
         Ride[] rides = {
                 new Ride(4, 10),
                 new Ride(8, 15)
         };
-        assertEquals(77.5, invoiceGenerator.average_fare(rides));
+        invoiceGenerator.addRides(user_id, rides);
+        InvoiceSummary summary = invoiceGenerator.getInvoiceSummary(user_id);
+        InvoiceSummary expectedInvoice = new InvoiceSummary(2, 155.0);
+        assertEquals(expectedInvoice, summary);
     }
 }
